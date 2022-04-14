@@ -31,21 +31,18 @@ public class Main {
         int i =1;
         do{
              try {
-                robotConnectionManager.getConnection();  // устанавливаем соединение
-                RobotConnection.moveRobotTo(toX, toY);   // двигаемся роботом в указанные координаты
-                RobotConnection.close();                 // закрываем канал связи
-                break;                                   // прерываем цикл, он успешно завершен
-             } catch (RobotConnectionException e) {      // при возникновении исключения:
-                 i++;                                    // раз возникло исключение, занчит попытка №1 провалена
-                                                         // фиксируем попытку №2
-                 RobotConnection.close();                // закрываем канал
-                 if (i > 3) {                           // проверяем не выходит ли наша попытка связи
-                                                         // за предел допустимых попыток
-                     continue;                           // если выходит, закрываем канал и бросаем исключение
-                     RobotConnection.close();
-                     RobotConnectionException.super();
+                 robotConnectionManager.getConnection().moveRobotTo(toX, toY);
+                 robotConnectionManager.getConnection().close();
+                break;
+             } catch (RobotConnectionException e) {
+                 i++;
+                 robotConnectionManager.getConnection().close();
+                 if (i > 3) {
+                     continue;
+                     robotConnectionManager.getConnection().close();
+                     RobotConnectionException.super;
                  }
              }
-        }while (true);                                    // если не выходит, то повторяем цикл
+        }while (true);
     }
 }
